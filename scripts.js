@@ -6,7 +6,7 @@ const AllClearButton = document.querySelector("[data-all-clear]");
 const previousOpTextElement = document.querySelector("[data-previous]");
 const currentOpTextElement = document.querySelector("[data-current]");
 
-class calculator {
+class Calculator {
   constructor(previousOpTextElement, currentOpTextElement) {
     this.previousOpTextElement = previousOpTextElement;
     this.currentOpTextElement = currentOpTextElement;
@@ -17,4 +17,14 @@ class calculator {
     this.previousOperand = "";
     this.operation = undefined;
   }
+  updateDisplay() {
+    this.previousOpTextElement.innerText = this.previousOperand;
+    this.currentOpTextElement.innerText = this.currentOperand;
+  }
 }
+const calculator = new Calculator(previousOpTextElement, currentOpTextElement);
+
+AllClearButton.addEventListener("click", () => {
+  calculator.clear();
+  calculator.updateDisplay();
+});
