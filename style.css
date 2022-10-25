@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-image: linear-gradient(90deg, #283048, #859398);
+}
+
+.grid-container {
+ 
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px,auto) repeat(5, 100px);
+}
+
+.grid-container > button{
+    cursor: pointer;
+    font-size: 30px;
+   border: none;
+    outline: none;
+   
+}
+
+.grid-container> .operador{
+    background-color: #2830487d;
+}
+.output{
+    grid-column: 1/-1 ;/*expandir em uma linha completa*/
+    background: #222;;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.span-two{
+    grid-column: span 2; /*expandir 2 colunas */
+}
+.output > .previous-operand{
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.5rem;
+}
+.output > .current-operand{
+    color: white;
+    font-size: 2.5rem;
+}
