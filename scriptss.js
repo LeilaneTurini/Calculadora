@@ -68,7 +68,7 @@ class Calculator {
       default:
         return;
     }
-    
+
     this.currentOperand = result;
     this.operation = undefined;
     this.previousOperand = "";
@@ -98,19 +98,19 @@ class Calculator {
     this.previousOperand = "";
     this.operation = undefined;
   }
+
   updateDisplay() {
     this.previousOperandTextElement.innerText = `${this.formatDisplayNumber(
       this.previousOperand
-      )}  ${this.operation || ""}`;
+    )} ${this.operation || ""}`;
     this.currentOperandTextElement.innerText = this.formatDisplayNumber(
       this.currentOperand
     );
-  }
-}
-const calculator = new Calculator (
-  previousOperandTextElement, 
+  }}
+const calculator = new Calculator(
+  previousOperandTextElement,
   currentOperandTextElement
-  );
+);
 
 for (const numberButton of numberButtons) {
   numberButton.addEventListener("click", () => {
