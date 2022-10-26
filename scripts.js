@@ -1,29 +1,45 @@
 const numberButtons = document.querySelectorAll("[data-number]");
-const operationButtons = document.querySelectorAll("[data-operador]");
+const operationButtons = document.querySelectorAll("[data-operator]");
 const equalsButton = document.querySelector("[data-equals]");
 const deleteButton = document.querySelector("[data-delete]");
 const allClearButton = document.querySelector("[data-all-clear]");
-const previousOpTextElement = document.querySelector(
-  "[data-previous-operand]"
-  );
-const currentOpTextElement = document.querySelector(
-  "[data-current-operand]"
-  );
-
+const previousOperandTextElement = document.querySelector("[data-previous-operand]");
+const currentOperandTextElement = document.querySelector("[data-current-operand]");
 
 class Calculator {
-  constructor(previousOpTextElement, currentOpTextElement) {
-    this.previousOpTextElement = previousOpTextElement;
-    this.currentOpTextElement = currentOpTextElement;
-    this.clear()
+  constructor(previousOperandTextElement, currentOperandTextElement) {
+    this.previousOperandTextElement = previousOperandTextElement;
+    this.currentOperandTextElement = currentOperandTextElement;
+    this.clear();
   }
-delete(){
-  this.currentOperand = this.currentOperand.toString().slice(0,-1)
-}
+
+  formatDisplayNumber(number) {
+    const stringNumber = number.toString();
+    const interDigits = parseFloat(stringNumber.split(".")[0]);
+    const decimalDigits = stringNumber.split(".")[1];
+
+    let integerDisplay;
+    if (isNaN(interDigits)) {
+      integerDisplay = "";
+    } else {
+      integerDisplay = interDigits.toLocaleString("en", {
+        maximumFractionDigits: 0,
+      });
+    }
+
+    if (decimalDigits != null) {
+      return `${integerDisplay} . ${decimalDigits}`;
+    } else {
+      return integerDisplay;
+    }
+  }
+  delete() {
+    this.currentOperand = this.currentOperand.toString().slice(0, -1);
+  }
   calculate() {
     let result;
 
-    const _previousOperand= parseFloat(this.previousOperand);
+    const _previousOperand = parseFloat(this.previousOperand);
     const _currentOperand = parseFloat(this.currentOperand);
 
     if (isNaN(_previousOperand) || isNaN(_currentOperand)) return;
@@ -35,24 +51,23 @@ delete(){
       case "-":
         result = _previousOperand - _currentOperand;
         break;
-        case "÷":
+      case "÷":
         result = _previousOperand / _currentOperand;
         break;
       case "*":
         result = _previousOperand * _currentOperand;
         break;
-    
+
       default:
         return;
     }
     this.currentOperand = result;
-    this.operation = undefined
-    this.previousOperand =''
+    this.operation = undefined;
+    this.previousOperand = "";
   }
 
   chooseOperation(operation) {
-    if (this.currentOperand ==='') return
-    if (this.currentOperand ==="") return;
+    if (this.currentOperand === "") return;
     if (this.previousOperand !== "") {
       this.calculate();
     }
@@ -74,13 +89,14 @@ delete(){
     this.operation = undefined;
   }
   updateDisplay() {
-    this.previousOpTextElement.innerText = `${this.previousOperand} ${
-      this.operation || ""
-    }`;
-    this.currentOpTextElement.innerText = this.currentOperand;
+    this.previousOperandTextElement.innerText = `${this.formatDisplayNumber(this.previousOperand)} 
+      ${this.operation || ""}`;
+    this.currentOperandTextElement.innerText = this.formatDisplayNumber(
+      this.currentOperand
+    );
   }
 }
-const calculator = new Calculator(previousOpTextElement, currentOpTextElement);
+const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
 
 for (const numberButton of numberButtons) {
   numberButton.addEventListener("click", () => {
@@ -100,11 +116,11 @@ allClearButton.addEventListener("click", () => {
   calculator.updateDisplay();
 });
 
-equalsButton.addEventListener('click', ()=>{
-  calculator.calculate()
-  calculator.updateDisplay()
-})
-deleteButton.addEventListener('click', ()=>{
-  calculator.delete()
-  calculator.updateDisplay()
-})
+equalsButton.addEventListener("click", () => {
+  calculator.calculate();
+  calculator.updateDisplay();
+});
+deleteButton.addEventListener("click", () => {
+  calculator.delete();
+  calculator.updateDisplay();
+});
